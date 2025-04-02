@@ -6,6 +6,7 @@ const User_documents = require("../models/userdoc.model");
 const Users = require("../models/users.model");
 const User_skills = require("../models/userskil.model");
 const jwtService = require("../service/jwt.service");
+const config = require('config');
 
 const addUser = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ const addUser = async (req, res) => {
       first_name,
       last_name,
       phone_number,
+      password,
       role,
       refresh_token,
       created_at,
@@ -22,6 +24,7 @@ const addUser = async (req, res) => {
       first_name,
       last_name,
       phone_number,
+      password,
       role,
       refresh_token,
       created_at,
@@ -70,9 +73,13 @@ const loginUser = async (req, res) => {
   try {
     const { phone_number, password } = req.body;
 
-    const user = await Users.findOne({ phone_number });
+    const user = await Users.findOne({ where: { phone_number } });
     if (!user) {
       return res.status(400).send({ message: "User not found" });
+    }
+    if(!password||password != user.password){
+      return res.status(400).send({ message:"dfghjkl"
+      })
     }
 
     const payload = {
@@ -98,10 +105,72 @@ const loginUser = async (req, res) => {
   }
 };
 
+const refreshTokenUser = async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
+    console.log(refreshToken);
+
+    if (!refreshToken) {
+      return res.status(400).send({ message: "tokrn yoqqq" });
+    }
+
+    const user = await Users.findOne({
+      where: { refresh_token: refreshToken },
+    });
+    if (!user) {
+      return res.status(400).send({ message: "bunday tokenligi yoqqq" });
+    }
+    const payload = {
+      id: user._id,
+      phone_number: user.phone_number,
+      role: user.role,
+    };
+
+    const tokens = jwtService.generateTokens(payload);
+    user.refresh_token = tokens.refreshToken;
+    await user.save();
+    res.cookie("refreshToken", tokens.refreshToken, {
+      httpOnly: true,
+      maxAge: config.get("refresh_cookie_time"),
+    });
+    res.status(200).send({ message: "Yangi", accessToken: tokens.accessToken });
+  } catch (error) {
+    errorHandler(error, res);
+  }
+};
+
+const logoutUser = async (req, res) => {
+  try {
+    const { refreshToken } = req.cookies;
+    console.log(refreshToken);
+
+    if (!refreshToken) {
+      return res.status(400).send({ message: "Token not provided" });
+    }
+
+    const user = await Users.findOne({
+      where: { refresh_token: refreshToken },
+    });
+    if (!user) {
+      return res.status(400).send({ message: "Invalid token" });
+    }
+  
+    user.refresh_token = "";
+    await user.save();
+
+    res.clearCookie("refreshToken");
+    res.send({ message: "User logout successful", user });
+  } catch (error) {
+    errorHandler(error, res);
+  }
+};
+
 module.exports = {
   addUser,
   getAllUser,
   getById,
   deleteUser,
-  loginUser
+  loginUser,
+  refreshTokenUser,
+  logoutUser
 };
