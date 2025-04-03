@@ -27,7 +27,6 @@ const Company = sequelize.define(
     },
   },
   {
-    
     timestamps: false,
   }
 );
