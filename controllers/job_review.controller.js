@@ -1,14 +1,14 @@
 const Job_reviews = require("../models/job_reviews.model");
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const addJobReview = async (req, res) => {
   try {
     const { user_id, job_id, rating, created_at } = req.body;
-    const newReview = await Job_reviews.create(
-      {user_id,
+    const newReview = await Job_reviews.create({
+      user_id,
       job_id,
       rating,
-      created_at}
-    );
+      created_at,
+    });
     res.status(201).send({ message: "Review added", newReview });
   } catch (error) {
     errorHandler(error, res);
@@ -36,7 +36,7 @@ const getJobReviewById = async (req, res) => {
 
 const deleteJobReview = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     await Job_reviews.destroy({ where: { id } });
     res.status(200).send({ message: "Review deleted" });
   } catch (error) {
@@ -47,10 +47,13 @@ const deleteJobReview = async (req, res) => {
 const updateJobReview = async (req, res) => {
   try {
     const { id } = req.params;
-    await Job_reviews.update({user_id, job_id, rating, created_at}, {
-      where: { id },
-      returning: true,
-    });
+    await Job_reviews.update(
+      { user_id, job_id, rating, created_at },
+      {
+        where: { id },
+        returning: true,
+      }
+    );
     res.status(200).send({ message: "Review updated" });
   } catch (error) {
     errorHandler(error, res);
@@ -58,9 +61,9 @@ const updateJobReview = async (req, res) => {
 };
 
 module.exports = {
-    addJobReview,
-    getAllJobReviews,
-    getJobReviewById,
-    deleteJobReview,
-    updateJobReview
-}
+  addJobReview,
+  getAllJobReviews,
+  getJobReviewById,
+  deleteJobReview,
+  updateJobReview,
+};

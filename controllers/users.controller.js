@@ -1,12 +1,12 @@
 const sequelize = require("../config/db");
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const Company = require("../models/company.model");
 const Passport_data = require("../models/passport.model");
 const User_documents = require("../models/userdoc.model");
 const Users = require("../models/users.model");
 const User_skills = require("../models/userskil.model");
-const jwtService = require("../service/jwt.service");
-const config = require('config');
+const jwtService = require("../services/jwt.service");
+const config = require("config");
 
 const addUser = async (req, res) => {
   try {
@@ -77,9 +77,8 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: "User not found" });
     }
-    if(!password||password != user.password){
-      return res.status(400).send({ message:"dfghjkl"
-      })
+    if (!password || password != user.password) {
+      return res.status(400).send({ message: "dfghjkl" });
     }
 
     const payload = {
@@ -154,7 +153,7 @@ const logoutUser = async (req, res) => {
     if (!user) {
       return res.status(400).send({ message: "Invalid token" });
     }
-  
+
     user.refresh_token = "";
     await user.save();
 
@@ -172,5 +171,5 @@ module.exports = {
   deleteUser,
   loginUser,
   refreshTokenUser,
-  logoutUser
+  logoutUser,
 };

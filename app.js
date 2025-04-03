@@ -4,8 +4,6 @@ const mainRoute = require("./routes/index.routes");
 const cookieParser = require("cookie-parser");
 const sequelize = require("./config/db");
 
-const Users = require("./models/users.model");
-
 const PORT = config.get("port") || 3004;
 
 const app = express();

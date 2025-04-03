@@ -1,4 +1,4 @@
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const Passport_data = require("../models/passport.model");
 const Users = require("../models/users.model");
 
@@ -19,7 +19,7 @@ const addNewpassports = async (req, res) => {
 
 const findPassports = async (req, res) => {
   try {
-    const passports = await Passport_data.findAll({include:Users});
+    const passports = await Passport_data.findAll({ include: Users });
     res.status(200).send({ passports });
   } catch (error) {
     errorHandler(error, res);

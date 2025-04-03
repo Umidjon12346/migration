@@ -1,12 +1,11 @@
 const sequelize = require("../config/db");
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const Company = require("../models/company.model");
 const Users = require("../models/users.model");
 
-
 const addCompany = async (req, res) => {
   try {
-    const { name,email,phone_number,web_site,description } = req.body;
+    const { name, email, phone_number, web_site, description } = req.body;
 
     const newUser = await Company.create({
       name,
@@ -24,7 +23,7 @@ const addCompany = async (req, res) => {
 
 const getAllCompany = async (req, res) => {
   try {
-    const users = await Company.findAll({include:[Users]});
+    const users = await Company.findAll({ include: [Users] });
 
     res.status(200).send({ users });
   } catch (error) {
@@ -72,5 +71,5 @@ module.exports = {
   getAllCompany,
   getByIdCompany,
   deleteCompany,
-  updateCompany
+  updateCompany,
 };

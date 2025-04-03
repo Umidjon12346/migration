@@ -1,6 +1,5 @@
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const { Contract } = require("../models/contracts.model");
-
 
 const addContract = async (req, res) => {
   try {
@@ -45,7 +44,6 @@ const getContractById = async (req, res) => {
     errorHandler(error, res);
   }
 };
-
 
 const updateContract = async (req, res) => {
   try {

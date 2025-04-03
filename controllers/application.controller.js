@@ -1,6 +1,5 @@
 const Application = require("../models/application.model");
-const { errorHandler } = require("../helpers/error_handler");
-
+const { errorHandler } = require("../helpers/error.handler");
 
 const addApplication = async (req, res) => {
   try {
@@ -17,7 +16,6 @@ const addApplication = async (req, res) => {
   }
 };
 
-
 const getAllApplications = async (req, res) => {
   try {
     const applications = await Application.findAll();
@@ -26,7 +24,6 @@ const getAllApplications = async (req, res) => {
     errorHandler(error, res);
   }
 };
-
 
 const getApplicationById = async (req, res) => {
   try {
@@ -37,7 +34,6 @@ const getApplicationById = async (req, res) => {
     errorHandler(error, res);
   }
 };
-
 
 const updateApplication = async (req, res) => {
   try {
@@ -52,7 +48,6 @@ const updateApplication = async (req, res) => {
     errorHandler(error, res);
   }
 };
-
 
 const deleteApplication = async (req, res) => {
   try {

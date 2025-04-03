@@ -1,4 +1,4 @@
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const User_documents = require("../models/userdoc.model");
 const Users = require("../models/users.model");
 
@@ -19,7 +19,10 @@ const addNewUserdocs = async (req, res) => {
 
 const getUserdocs = async (req, res) => {
   try {
-    const userdocs = await User_documents.findAll({include:Users,attributes:["first_name"]});
+    const userdocs = await User_documents.findAll({
+      include: Users,
+      attributes: ["first_name"],
+    });
     res.status(200).send({ userdocs });
   } catch (error) {
     errorHandler(error, res);

@@ -1,5 +1,5 @@
 const sequelize = require("../config/db");
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const Job = require("../models/jobs.model");
 
 const addJob = async (req, res) => {
@@ -62,14 +62,16 @@ const updateJob = async (req, res) => {
   try {
     const { id } = req.params;
     await Job.update(
-      {company_id,
-      country_id,
-      category_id,
-      title,
-      job_description,
-      number_of_vacancies,
-      salary,
-      posted_at},
+      {
+        company_id,
+        country_id,
+        category_id,
+        title,
+        job_description,
+        number_of_vacancies,
+        salary,
+        posted_at,
+      },
       {
         where: { id },
         returning: true,

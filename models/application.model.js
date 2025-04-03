@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
+const Users = require("./users.model");
+const Jobs = require("./jobs.model");
 
 const Application = sequelize.define(
   "applications",
@@ -9,12 +11,7 @@ const Application = sequelize.define(
       autoIncrement: true,
       primaryKey: true,
     },
-    applicant_id: {
-      type: DataTypes.BIGINT,
-    },
-    application_job_id: {
-      type: DataTypes.BIGINT,
-    },
+    
     status: {
       type: DataTypes.STRING,
     },
@@ -25,5 +22,11 @@ const Application = sequelize.define(
     timestamps: false,
   }
 );
+
+Application.belongsTo(Users)
+Users.hasMany(Application, { foreignKey: 'applicant_id' });
+
+Application.belongsTo(Jobs)
+Jobs.hasMany(Application, { foreignKey: 'application_job_id' });
 
 module.exports = Application;

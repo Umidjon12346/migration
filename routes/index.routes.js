@@ -11,6 +11,10 @@ const jobReviewROUTE = require("./job_review.routes");
 const jobInterestROUTE = require("./job_interest.routes");
 const applicationROUTE = require("./application.routes");
 const contractROUTE = require("./contract.routes");
+const jobInterviewROUTE = require("./job_interview.routes");
+const categoryROUTE = require("./category.routes");
+const countryROUTE = require("./country.routes");
+const requirentROUTE = require("./requirement.routes");
 
 router.use("/users", usersROUTE);
 router.use("/user_skills", userskilROUTE);
@@ -23,5 +27,9 @@ router.use("/job_review", jobReviewROUTE);
 router.use("/job_interest", jobInterestROUTE);
 router.use("/application", applicationROUTE);
 router.use("/contract", contractROUTE);
+router.use("/job_interview", jobInterviewROUTE);
+router.use("/category", categoryROUTE);
+router.use("/country", countryROUTE);
+router.use("/requirement", requirentROUTE);
 
 module.exports = router;

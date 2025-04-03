@@ -1,4 +1,4 @@
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const User_skills = require("../models/userskil.model");
 
 const addNewUserskill = async (req, res) => {

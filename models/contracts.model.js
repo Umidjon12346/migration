@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/db");
+const Application = require("./application.model");
 const Contract = sequelize.define(
   "contracts",
   {
@@ -7,9 +8,6 @@ const Contract = sequelize.define(
       type: DataTypes.BIGINT,
       autoIncrement: true,
       primaryKey: true,
-    },
-    application_id: {
-      type: DataTypes.BIGINT,
     },
     contract_file_path: {
       type: DataTypes.STRING,
@@ -33,5 +31,8 @@ const Contract = sequelize.define(
     timestamps: false,
   }
 );
+
+Contract.belongsTo(Application)
+Application.hasMany(Contract, { foreignKey: "application_id" });
 
 module.exports = { Application, Contract };

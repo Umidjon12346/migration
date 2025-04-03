@@ -1,10 +1,10 @@
 const sequelize = require("../config/db");
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const CompanyWorkers = require("../models/company_worker.model");
 
 const addCompanyWorker = async (req, res) => {
   try {
-    const { companyId,userId,role } = req.body;
+    const { companyId, userId, role } = req.body;
 
     const newUser = await CompanyWorkers.create({
       companyId,

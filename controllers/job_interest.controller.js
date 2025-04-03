@@ -1,9 +1,9 @@
-const { errorHandler } = require("../helpers/error_handler");
+const { errorHandler } = require("../helpers/error.handler");
 const Job_interest = require("../models/job_interest.model");
 
 const addJobInterest = async (req, res) => {
   try {
-    const {user_id,job_id,timestamps} = req.body
+    const { user_id, job_id, timestamps } = req.body;
     const newInterest = await Job_interest.create({
       user_id,
       job_id,
@@ -26,7 +26,7 @@ const getAllJobInterests = async (req, res) => {
 
 const getJobInterestById = async (req, res) => {
   try {
-    const { id } = req.params
+    const { id } = req.params;
     const interest = await Job_interest.findByPk({ where: { id } });
     res.status(200).send({ interest });
   } catch (error) {
@@ -60,10 +60,10 @@ const updateJobInterest = async (req, res) => {
   }
 };
 
-module.exports={
-    addJobInterest,
-    getAllJobInterests,
-    getJobInterestById,
-    deleteJobInterest,
-    updateJobInterest
-}
+module.exports = {
+  addJobInterest,
+  getAllJobInterests,
+  getJobInterestById,
+  deleteJobInterest,
+  updateJobInterest,
+};

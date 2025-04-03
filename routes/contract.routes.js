@@ -1,11 +1,12 @@
 const { addContract, getAllContracts, getContractById, deleteContract, updateContract } = require("../controllers/contract.controller");
-
+const authGuard = require("../middleware/guards/auth.guard");
 const router = require("express").Router();
+const userAdminGuard = require("../middleware/guards/user.admin.guard");
 
-router.post("/", addContract);
-router.get("/", getAllContracts);
-router.get("/:id", getContractById);
-router.delete("/:id", deleteContract);
-router.put("/:id", updateContract);
+router.post("/",authGuard,userAdminGuard, addContract);
+router.get("/",authGuard, getAllContracts);
+router.get("/:id",authGuard, getContractById);
+router.delete("/:id",authGuard,userAdminGuard, deleteContract);
+router.put("/:id",authGuard,userAdminGuard, updateContract);
 
 module.exports = router;
